@@ -69,28 +69,26 @@ void InsertToList(node* &lst, int newpos, video item)
     node* tmp = new node;
     tmp->data = item;
 
-    if(newpos < 0 && newpos > n)
+    if(newpos <= 0 && newpos > n + 1)
     {
         return;
-    }
-
-    if(newpos == 0)
+    }else if(newpos == 1)
     {
+        tmp->pNext = pCurr;
         lst = tmp;
-    }
-
-    if(newpos == n + 1)
+    }else if(newpos == n + 1)
     {
         AddItemToList(pCurr, item);
     }
+    else{
+        for(int i = 1; i < newpos - 1; i++)
+        {
+            pCurr = pCurr->pNext;
+        }
 
-    for(int i = 1; i < newpos - 1; i++)
-    {
-        pCurr = pCurr->pNext;
+        tmp->pNext = pCurr->pNext;
+        pCurr->pNext = tmp;
     }
-
-    tmp->pNext = pCurr->pNext;
-    pCurr->pNext = tmp;
 
 }
 
@@ -103,6 +101,20 @@ void RemoveFromList(node* &lst, int pos)
     if(lst == NULL)
     {
         return;
+    }
+    else if(pos == 1)
+    {
+        lst = lst->pNext;
+    }else if(pos == n)
+    {
+        node* pPrev = NULL;
+        node* pCurr = lst;
+        while(pCurr->pNext != NULL)
+        {
+            pPrev = pCurr;
+            pCurr = pCurr->pNext;
+        }
+        pPrev->pNext = NULL;
     }
     else{
     for(int i = 1; i < pos; i++)
@@ -120,15 +132,25 @@ void ClearList(node* &lst)
     lst = NULL;
 }
 
-// video GetListEntry(node* lst, int pos)
-// {
+video GetListEntry(node* lst, int pos)
+{
+    node* pCurr = lst;
+    for(int i = 0; i < pos - 1; i++)
+    {
+        pCurr = pCurr->pNext;
+    }
+    return pCurr->data;
+}
 
-// }
-
-// void SetListEntry(node* &lst, int pos, video item)
-// {
-
-// }
+void SetListEntry(node* &lst, int pos, video item)
+{
+    node* pCurr = lst;
+    for(int i = 0; i < pos - 1; i++)
+    {
+        pCurr = pCurr->pNext;
+    }
+    item = pCurr->data;
+}
 
 void ouputLinkedList(node* head)
 {
@@ -154,8 +176,8 @@ int main()
         cout << "5. Remove Position From List" << endl;
         cout << "6. Clear List" << endl;
         cout << "7. Output Linked List" << endl;
-        cout << "8. " << endl;
-
+        cout << "8. Get the video at the position pos in lst" << endl;
+        cout << "9. Set the video at the position pos in lst to item" << endl;
         int choice;
         cin >> choice;
 
@@ -207,6 +229,24 @@ int main()
         }else if(choice == 7)
         {
             ouputLinkedList(list);
+        }
+        else if(choice == 8)
+        {
+            int pos;
+            cout << "Position: ";
+            cin >> pos;
+            GetListEntry(list, pos);
+        }
+        else if(choice == 9)
+        {
+            int pos;
+            cout << "Position: ";
+            cin >> pos;
+            video item;
+            SetListEntry(list, pos, item);
+            cout << "Title: " << item.title << endl;
+            cout << "Category: " << item.category << endl;
+            cout << "Quantity: " << item.quantity << endl;
         }
     }
     
