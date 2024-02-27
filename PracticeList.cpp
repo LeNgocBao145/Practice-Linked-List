@@ -149,7 +149,7 @@ void SetListEntry(node* &lst, int pos, video item)
     {
         pCurr = pCurr->pNext;
     }
-    item = pCurr->data;
+    pCurr->data = item;
 }
 
 void ouputLinkedList(node* head)
@@ -235,7 +235,10 @@ int main()
             int pos;
             cout << "Position: ";
             cin >> pos;
-            GetListEntry(list, pos);
+            video item = GetListEntry(list, pos);
+            cout << "Title: " << item.title << endl;
+            cout << "Category: " << item.category << endl;
+            cout << "Quantity: " << item.quantity << endl;
         }
         else if(choice == 9)
         {
@@ -243,10 +246,14 @@ int main()
             cout << "Position: ";
             cin >> pos;
             video item;
+            cout << "Title: "<< endl;
+            cin.ignore();
+            getline(cin, item.title);
+            cout << "Category: " << endl;
+            cin >> item.category;
+            cout << "Quantity: " << endl;
+            cin >> item.quantity;
             SetListEntry(list, pos, item);
-            cout << "Title: " << item.title << endl;
-            cout << "Category: " << item.category << endl;
-            cout << "Quantity: " << item.quantity << endl;
         }
     }
     
