@@ -12,6 +12,8 @@ video data;
 node* pNext;
 };
 
+bool IsListEmpty(node* lst);
+int GetListLength(node* lst);
 
 bool IsListEmpty(node* lst)
 {
@@ -169,6 +171,7 @@ int main()
         cout << "7. Output Linked List" << endl;
         cout << "8. Get the video at the position pos in lst" << endl;
         cout << "9. Set the video at the position pos in lst to item" << endl;
+        cout << "10. Sort video non-decreasing" << endl;
         int choice;
         cin >> choice;
 
