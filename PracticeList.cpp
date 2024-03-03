@@ -12,15 +12,6 @@ video data;
 node* pNext;
 };
 
-bool IsListEmpty(node* lst);
-int GetListLength(node* lst);
-void AddItemToList(node* &lst, video item);
-void InsertToList(node* &lst, int newpos, video item);
-void RemoveFromList(node* &lst, int pos);
-void ClearList(node* &lst);
-video GetListEntry(node* lst, int pos);
-void SetListEntry(node* &lst, int pos, video item);
-void ouputLinkedList(node* head);
 
 bool IsListEmpty(node* lst)
 {
