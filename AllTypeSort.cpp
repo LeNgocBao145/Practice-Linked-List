@@ -1,21 +1,36 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-
+#include <ctime>
 #include <vector>
-//#include <algorithm>
+
 
 using namespace std;
 
+//Thuật toán đệ quy chia mảng sắp xếp 
+void mergeSort(int s[], int l, int r);
 void merge(int s[], int l, int m, int r);
 
-void merge(int s[], int l, int m, int r);
-
+//Thuật toán Selection Sort
 void selectionSort(int arr[], int n);
 
+//Thuật toán Insert Sort
 void insertionSort(int arr[], int n);
 
+//Thuật toán Counting Sort 
 void countingSort(int arr[], int n);
+
+//Thuật toán sắp xếp Binary Tree giảm dần
+void heapifyMax(int arr[], int n, int i);
+
+//Thuật toán sắp xếp Binary Tree tăng dần
+void heapifyMin(int arr[], int n, int i);
+
+//Thuật toán sắp xếp vun đống Heap tăng dần
+void heapSortMax(int arr[], int n);
+
+//Thuật toán sắp xếp vun đống Heap giảm dần
+void heapSortMin(int arr[], int n);
 
 void selectionSort(int arr[], int n)
 {
@@ -93,6 +108,7 @@ void mergeSort(int s[], int l, int r)
     mergeSort(s, m + 1, r);
     merge(s, l, m, r);
 }
+
 void merge(int s[], int l, int m, int r)
 {
     vector<int> x(s + l, s + m + 1);
@@ -132,15 +148,90 @@ void merge(int s[], int l, int m, int r)
 
 }
 
+void heapifyMax(int arr[], int n, int i)
+{
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+    int Largest = i;
+
+    if(left < n && arr[left] > arr[Largest])
+    {
+        Largest = left;
+    }
+
+    if(right < n && arr[right] > arr[Largest])
+    {
+        Largest = right;
+    }
+
+    if(Largest != i)
+    {
+        swap(arr[i], arr[Largest]);
+        heapifyMax(arr, n, Largest);
+    }
+}
+
+void heapifyMin(int arr[], int n, int i)
+{
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+    int Smallest = i;
+
+    if(left < n && arr[left] < arr[Smallest])
+    {
+        Smallest = left;
+    }
+
+    if(right < n && arr[right] < arr[Smallest])
+    {
+        Smallest = right;
+    }
+
+    if(Smallest != i)
+    {
+        swap(arr[i], arr[Smallest]);
+        heapifyMin(arr, n, Smallest);
+    }
+}
+
+void heapSortMax(int arr[], int n)
+{
+    for(int i =  n / 2 - 1; i >= 0; i--)
+    {
+        heapifyMax(arr, n, i);
+    }
+
+    for(int i = n - 1; i >= 0; i--)
+    {
+        swap(arr[0], arr[i]);
+        heapifyMax(arr, i, 0);
+    }
+}
+
+void heapSortMin(int arr[], int n)
+{
+    for(int i =  n / 2 - 1; i >= 0; i--)
+    {
+        heapifyMin(arr, n, i);
+    }
+
+    for(int i = n - 1; i >= 0; i--)
+    {
+        swap(arr[0], arr[i]);
+        heapifyMin(arr, i, 0);
+    }
+}
+
 int main() {
-    int numbers[20];
+    int numbers[100];
     int n;
     cin >> n;
     for (int j = 0; j < n; j++)
     {
-        cin >> numbers[j];
+        numbers[j] = rand() % ( 99 - 10);
     }
-    mergeSort(numbers, 0, 9);
+    
+    heapSortMin(numbers, n);
     for (int j = 0; j < n; j++)
     {
         cout << numbers[j] << " ";
