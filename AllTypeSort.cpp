@@ -3,7 +3,7 @@
 #include <cstring>
 #include <ctime>
 #include <vector>
-
+#include <algorithm>
 
 using namespace std;
 
@@ -31,6 +31,14 @@ void heapSortMax(int arr[], int n);
 
 //Thuật toán sắp xếp vun đống Heap giảm dần
 void heapSortMin(int arr[], int n);
+
+//Thuật toán sắp xếp kiểu chiếc lược (sort bằng cách so sánh 2 phần tử với index cách nhau 1 khoảng gap)
+void combSort(int arr[], int n);
+
+void interchangeSort(int arr[], int n);
+
+//Thuật toán sắp xếp cocktail sort hay còn gọi là shaker sort (là bubble sort 2 chiều xuôi và ngược)
+void shakerSort(int arr[], int n);
 
 void selectionSort(int arr[], int n)
 {
@@ -222,6 +230,102 @@ void heapSortMin(int arr[], int n)
     }
 }
 
+void combSort(int arr[], int n)
+{
+    int gap = n - 1;
+
+    while(gap > 0)
+    {
+        int index = 0;
+
+        while(index + gap < n)
+        {
+            if(arr[index] > arr[index + gap])
+            {
+                swap(arr[index], arr[index + gap]);
+            }
+
+            index++;
+        }
+
+        gap -= 2;
+    }
+
+}
+
+void StrangeSort(int arr[], int n)
+{
+    insertionSort(arr, n);
+
+    int ans[100];
+
+    for(int i = 0; i < n; i++)
+    {
+        ans[i] = arr[i];
+    }
+
+    int index = 0;
+
+    int i = n - 1, j = 0;
+
+    while(j <= i)
+    {
+        arr[index++] = ans[j];
+        arr[index++] = ans[i];
+        j++;
+        i--;
+
+        if(j == i)
+        {
+            arr[index++] = ans[j];
+            break;
+        }
+    }
+
+}
+
+void interchangeSort(int arr[], int n)
+{
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = i + 1; j < n; j++)
+        {
+            if(arr[i] > arr[j])
+            {
+                swap(arr[i], arr[j]);
+            }
+        }
+    }
+}
+
+void shakerSort(int arr[], int n)
+{
+    int head = 0;
+    int tail = n - 1;
+
+    while(head < tail)
+    {
+        for(int i = head; i < tail; i++)
+        {
+            if(arr[i] > arr[i + 1])
+            {
+                swap(arr[i], arr[i + 1]);
+            }
+        }
+
+        for(int i = tail - 1; i > head; i--)
+        {
+            if(arr[i] < arr[i - 1])
+            {
+                swap(arr[i], arr[i - 1]);
+            }
+        }
+
+        head++;
+        tail--;
+    }
+}
+
 int main() {
     int numbers[100];
     int n;
@@ -230,8 +334,16 @@ int main() {
     {
         numbers[j] = rand() % ( 99 - 10);
     }
+
+    for (int j = 0; j < n; j++)
+    {
+        cout << numbers[j] << " ";
+    }
+
+    cout << endl;
     
-    heapSortMin(numbers, n);
+    shakerSort(numbers, n);
+    
     for (int j = 0; j < n; j++)
     {
         cout << numbers[j] << " ";
